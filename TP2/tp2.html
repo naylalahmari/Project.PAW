@@ -1,106 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TP2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP2</title>
 </head>
 <body>
-    <h1>Liste de Présence</h1>
- <table id="attendanceTable" border="1">
-    <tr>
-        <th rowspan="2">Last Name </th>
-        <th rowspan="2">First Name </th>
-        <th colspan="2"> S1</th>
-        <th colspan="2"> S2</th>
-        <th colspan="2"> S3</th>
-        <th colspan ="2">S4</th>
-        <th colspan="2"> S5</th>
-        <th colspan="2"> S6</th>
-         <th rowspan="2">Absences </th>
-        <th rowspan="2">Participation </th>
-         <th rowspan="2">Message </th>
-        
-    </tr>
-    <tr>
-        <th> P</th>
-        <th> Pa</th>
-        <th> P</th>
-        <th> Pa</th> 
-        <th> P</th>
-        <th> Pa</th>
-        <th> P</th>
-        <th> Pa</th>
-        <th> P</th>
-        <th> Pa</th>
-        <th> P</th>
-        <th> Pa</th>
+  <h1>Liste de Présence</h1>
 
-    </tr>
-    <tr>
+  <table id="attendanceTable" border="1">
+    <thead>
+      <tr>
+        <th rowspan="2">Last Name</th>
+        <th rowspan="2">First Name</th>
+        <th colspan="2">S1</th>
+        <th colspan="2">S2</th>
+        <th colspan="2">S3</th>
+        <th colspan="2">S4</th>
+        <th colspan="2">S5</th>
+        <th colspan="2">S6</th>
+        <th rowspan="2">Absences</th>
+        <th rowspan="2">Participation</th>
+        <th rowspan="2">Message</th>
+      </tr>
+      <tr>
+        <th>P</th><th>Pa</th>
+        <th>P</th><th>Pa</th>
+        <th>P</th><th>Pa</th>
+        <th>P</th><th>Pa</th>
+        <th>P</th><th>Pa</th>
+        <th>P</th><th>Pa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Étudiant 1 -->
+      <tr>
         <td>Ahmed</td>
-        <td>sara</td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
+        <td>Sara</td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
         <td class="absence-count">0 Abs</td>
         <td class="participation-count">0 prt</td>
+        <td class="message"></td>
+      </tr>
 
-        <td></td>
-
-    </tr>
-    <tr>
+      <!-- Étudiant 2 -->
+      <tr>
         <td>Yacine</td>
         <td>Ali</td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button onclick="toggleX(this)"> </button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
         <td class="absence-count">0 Abs</td>
         <td class="participation-count">0 prt</td>
+        <td class="message"></td>
+      </tr>
 
-        <td></td>
-    </tr>
-    <tr>
+      <!-- Étudiant 3 -->
+      <tr>
         <td>Houcine</td>
         <td>Rania</td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="attendance" onclick="toggleX(this)"> </button></td>
-        <td>  <button class="Participation" onclick="toggleX(this)"> </button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
+        <td><button class="attendance" onclick="toggleX(this)"></button></td>
+        <td><button class="participation" onclick="toggleX(this)"></button></td>
         <td class="absence-count">0 Abs</td>
         <td class="participation-count">0 prt</td>
-        <td></td>
-    </tr>
+        <td class="message"></td>
+      </tr>
+    </tbody>
+  </table>
 
-   
-    
- </table>
-   <script src="script.js"></script> 
+  <h2>Add Student</h2>
+  <form id="addStudentForm" novalidate>
+    <div>
+      <label for="studentId">Student ID:</label><br>
+      <input type="text" id="studentId" name="studentId">
+      <div class="error" id="studentIdError" style="color:red;"></div>
+    </div>
+    <br>
+    <div>
+      <label for="lastName">Last Name:</label><br>
+      <input type="text" id="lastName" name="lastName">
+      <div class="error" id="lastNameError" style="color:red;"></div>
+    </div>
+    <br>
+    <div>
+      <label for="firstName">First Name:</label><br>
+      <input type="text" id="firstName" name="firstName">
+      <div class="error" id="firstNameError" style="color:red;"></div>
+    </div>
+    <br>
+    <div>
+      <label for="email">Email:</label><br>
+      <input type="text" id="email" name="email">
+      <div class="error" id="emailError" style="color:red;"></div>
+    </div>
+    <br>
+    <button type="submit">Add Student</button>
+  </form>
+
+  <!-- Message de confirmation -->
+  <div id="formSuccess" style="color:green;font-weight:bold;margin-top:10px;"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
