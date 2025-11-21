@@ -9,7 +9,7 @@ function toggleX(button) {
   updateAbsences();
   updateParticipations();
   updateRowStylesAndMessages();
-  saveData(); // ✅ Sauvegarde après chaque clic
+  saveData();
 }
 
 // --- Compte les absences ---
@@ -20,13 +20,11 @@ function updateAbsences() {
     const buttons = row.querySelectorAll(".attendance");
     const absenceCell = row.querySelector(".absence-count");
 
-    if (buttons.length > 0 && absenceCell) {
-      let absences = 0;
-      buttons.forEach((btn) => {
-        if (btn.textContent.trim() === "") absences++;
-      });
-      absenceCell.textContent = absences + " Abs";
-    }
+    let absences = 0;
+    buttons.forEach((btn) => {
+      if (btn.textContent.trim() === "") absences++;
+    });
+    absenceCell.textContent = absences + " Abs";
   });
 }
 
@@ -38,47 +36,35 @@ function updateParticipations() {
     const partBtns = row.querySelectorAll(".participation");
     const partCell = row.querySelector(".participation-count");
 
-    if (partBtns.length > 0 && partCell) {
-      let participations = 0;
-      partBtns.forEach((btn) => {
-        if (btn.textContent.trim() === "✅") participations++;
-      });
-      partCell.textContent = participations + " prt";
-    }
+    let participations = 0;
+    partBtns.forEach((btn) => {
+      if (btn.textContent.trim() === "✅") participations++;
+    });
+    partCell.textContent = participations + " prt";
   });
 }
 
-// --- Étape 3 & 4 : couleur ligne et message ---
+// --- Couleur + message ---
 function updateRowStylesAndMessages() {
   const rows = document.querySelectorAll("#attendanceTable tbody tr");
 
   rows.forEach((row) => {
-    const absenceCell = row.querySelector(".absence-count");
-    const partCell = row.querySelector(".participation-count");
-    const messageCell = row.querySelector("td:last-child");
+    const abs = parseInt(row.querySelector(".absence-count").textContent);
+    const prt = parseInt(row.querySelector(".participation-count").textContent);
+    const msg = row.querySelector(".message");
 
-    if (absenceCell && partCell && messageCell) {
-      const absences = parseInt(absenceCell.textContent);
-      const participations = parseInt(partCell.textContent);
+    if (abs < 3) row.style.backgroundColor = "#b8f5b8";
+    else if (abs >= 3 && abs <= 4) row.style.backgroundColor = "#fff3b0";
+    else if (abs >= 5) row.style.backgroundColor = "#f5b8b8";
 
-      // Couleur selon absences
-      if (absences < 3) row.style.backgroundColor = "#b8f5b8"; // vert clair
-      else if (absences >= 3 && absences <= 4) row.style.backgroundColor = "#fff3b0"; // jaune clair
-      else if (absences >= 5) row.style.backgroundColor = "#f5b8b8"; // rouge clair
-
-      // Message
-      let message = "";
-      if (absences < 3 && participations >= 4) message = "Good attendance – Excellent participation";
-      else if (absences >= 3 && absences <= 4) message = "Warning – attendance low – You need to participate more";
-      else if (absences >= 5) message = "Excluded – too many absences – You need to participate more";
-      else message = "Good attendance – Try to participate more";
-
-      messageCell.textContent = message;
-    }
+    if (abs < 3 && prt >= 4) msg.textContent = "Good attendance – Excellent participation";
+    else if (abs >= 3 && abs <= 4) msg.textContent = "Warning – attendance low – You need to participate more";
+    else if (abs >= 5) msg.textContent = "Excluded – too many absences – You need to participate more";
+    else msg.textContent = "Good attendance – Try to participate more";
   });
 }
 
-// --- Sauvegarde dans le localStorage ---
+// --- Sauvegarde ---
 function saveData() {
   const data = [];
   const rows = document.querySelectorAll("#attendanceTable tbody tr");
@@ -93,7 +79,7 @@ function saveData() {
   localStorage.setItem("attendanceData", JSON.stringify(data));
 }
 
-// --- Recharge les données après refresh ---
+// --- Chargement ---
 function loadData() {
   const data = JSON.parse(localStorage.getItem("attendanceData"));
   if (!data) return;
@@ -112,7 +98,7 @@ function loadData() {
   updateRowStylesAndMessages();
 }
 
-// --- Validation et ajout du formulaire étudiant ---
+// --- Ajout étudiant ---
 document.getElementById("addStudentForm")?.addEventListener("submit", function(e) {
   e.preventDefault();
   let hasError = false;
@@ -122,30 +108,25 @@ document.getElementById("addStudentForm")?.addEventListener("submit", function(e
   const firstName = document.getElementById("firstName").value.trim();
   const email = document.getElementById("email").value.trim();
 
-  // Reset erreurs
-  ["studentIdError","lastNameError","firstNameError","emailError","formSuccess"].forEach(id => {
-    document.getElementById(id).textContent="";
-  });
+  ["studentIdError","lastNameError","firstNameError","emailError","formSuccess"]
+    .forEach(id => document.getElementById(id).textContent = "");
 
-  // Validation
   if(!studentId) { document.getElementById("studentIdError").textContent="Student ID is required."; hasError=true; }
   else if(!/^\d+$/.test(studentId)) { document.getElementById("studentIdError").textContent="Student ID must contain only numbers."; hasError=true; }
 
   if(!lastName) { document.getElementById("lastNameError").textContent="Last Name is required."; hasError=true; }
-  else if(!/^[a-zA-Z]+$/.test(lastName)) { document.getElementById("lastNameError").textContent="Last Name must contain only letters."; hasError=true; }
+  else if(!/^[a-zA-Z ]+$/.test(lastName)) { document.getElementById("lastNameError").textContent="Last Name must contain only letters and spaces."; hasError=true; }
 
   if(!firstName) { document.getElementById("firstNameError").textContent="First Name is required."; hasError=true; }
-  else if(!/^[a-zA-Z]+$/.test(firstName)) { document.getElementById("firstNameError").textContent="First Name must contain only letters."; hasError=true; }
+  else if(!/^[a-zA-Z ]+$/.test(firstName)) { document.getElementById("firstNameError").textContent="First Name must contain only letters and spaces."; hasError=true; }
 
   if(!email) { document.getElementById("emailError").textContent="Email is required."; hasError=true; }
   else if(!/^\S+@\S+\.\S+$/.test(email)) { document.getElementById("emailError").textContent="Invalid email format."; hasError=true; }
 
-  // Ajouter étudiant si pas d'erreur
   if(!hasError){
     const tbody = document.querySelector("#attendanceTable tbody");
     const newRow = document.createElement("tr");
 
-    // 6 séances × 2 boutons (attendance / participation)
     let buttonsHTML = "";
     for (let i = 0; i < 6; i++) {
       buttonsHTML += `<td><button class="attendance" onclick="toggleX(this)"></button></td>`;
@@ -162,27 +143,25 @@ document.getElementById("addStudentForm")?.addEventListener("submit", function(e
     `;
 
     tbody.appendChild(newRow);
-    this.reset();       // vide le formulaire
-    saveData();          // sauvegarde
+    this.reset();       
+    saveData();          
     updateAbsences();
     updateParticipations();
     updateRowStylesAndMessages();
 
-    // --- Afficher message de confirmation ---
-    document.getElementById("formSuccess").textContent = `Student ${firstName} ${lastName} added successfully!`;
+    document.getElementById("formSuccess").textContent =
+    `Student ${firstName} ${lastName} added successfully!`;
   }
 });
 
-// --- Initialisation au chargement ---
+// --- Validation dynamique ---
 document.addEventListener("DOMContentLoaded", () => {
-  loadData(); // recharge les données sauvegardées
+  loadData(); 
 
-  // --- Empêcher la frappe incorrecte dans les champs du formulaire + messages ---
   const lastNameField = document.getElementById("lastName");
   const firstNameField = document.getElementById("firstName");
   const studentIdField = document.getElementById("studentId");
 
-  // Crée des div pour les messages d'alerte
   const lastNameMsg = document.createElement("div");
   lastNameMsg.style.color = "red";
   lastNameField.parentNode.appendChild(lastNameMsg);
@@ -195,20 +174,19 @@ document.addEventListener("DOMContentLoaded", () => {
   idMsg.style.color = "red";
   studentIdField.parentNode.appendChild(idMsg);
 
-  // Validation à la frappe
   lastNameField.addEventListener("input", () => {
-    if (/[^a-zA-Z]/.test(lastNameField.value)) {
+    if (/[^a-zA-Z ]/.test(lastNameField.value)) {
       lastNameMsg.textContent = "⚠ Vous ne pouvez pas écrire des chiffres.";
-      lastNameField.value = lastNameField.value.replace(/[^a-zA-Z]/g, "");
+      lastNameField.value = lastNameField.value.replace(/[^a-zA-Z ]/g, "");
     } else {
       lastNameMsg.textContent = "";
     }
   });
 
   firstNameField.addEventListener("input", () => {
-    if (/[^a-zA-Z]/.test(firstNameField.value)) {
+    if (/[^a-zA-Z ]/.test(firstNameField.value)) {
       firstNameMsg.textContent = "⚠ Vous ne pouvez pas écrire des chiffres.";
-      firstNameField.value = firstNameField.value.replace(/[^a-zA-Z]/g, "");
+      firstNameField.value = firstNameField.value.replace(/[^a-zA-Z ]/g, "");
     } else {
       firstNameMsg.textContent = "";
     }
@@ -223,3 +201,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+// -------------------------------------------
+// 🔵 EXERCICE 5 : JQUERY
+// -------------------------------------------
+
+$(document).ready(function() {
+
+  // survol : highlight
+  $("#attendanceTable tbody").on("mouseenter", "tr", function() {
+    $(this).css("background-color", "#d0e8ff");
+  });
+
+  // quitter : enlever highlight
+  $("#attendanceTable tbody").on("mouseleave", "tr", function() {
+    $(this).css("background-color", "");
+    updateRowStylesAndMessages();
+  });
+
+  // clic : afficher nom + absences
+  $("#attendanceTable tbody").on("click", "tr", function() {
+    const lastName = $(this).find("td").eq(0).text();
+    const firstName = $(this).find("td").eq(1).text();
+    const absences = $(this).find(".absence-count").text();
+
+    alert("Student: " + firstName + " " + lastName + "\n" + "Absences: " + absences);
+  });
+
+});
+
+
