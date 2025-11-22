@@ -1,3 +1,17 @@
+// ------------------------------------
+// 🔵 NAVIGATION ENTRE SECTIONS
+// ------------------------------------
+function showSection(sectionId) {
+  document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+  document.getElementById(sectionId).style.display = "block";
+}
+
+
+
+// ------------------------------------
+// TON CODE EXACT
+// ------------------------------------
+
 // --- Toggle présence / participation ---
 function toggleX(button) {
   if (button.textContent.trim() === "") {
@@ -202,9 +216,65 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// -------------------------------------------
-// 🔵 EXERCICE 5 : JQUERY
-// -------------------------------------------
+// --------EXERCICE 4 : SHOW REPORT + CHART------
+
+document.getElementById("showReportBtn").addEventListener("click", function() {
+
+  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+
+  let total = rows.length;
+  let presentCount = 0;
+  let participatedCount = 0;
+
+  rows.forEach(row => {
+    const attendanceButtons = row.querySelectorAll(".attendance");
+    const participationButtons = row.querySelectorAll(".participation");
+
+    // Student present = at least one ✓ in attendance
+    let isPresent = false;
+    attendanceButtons.forEach(btn => { if (btn.textContent.trim() === "✅") isPresent = true; });
+    if (isPresent) presentCount++;
+
+    // Student participated = at least one ✓ in participation
+    let hasParticipated = false;
+    participationButtons.forEach(btn => { if (btn.textContent.trim() === "✅") hasParticipated = true; });
+    if (hasParticipated) participatedCount++;
+  });
+
+  // Display report
+  document.getElementById("reportSection").style.display = "block";
+  document.getElementById("totalStudents").textContent = "Total number of students: " + total;
+  document.getElementById("studentsPresent").textContent = "Students marked present: " + presentCount;
+  document.getElementById("studentsParticipated").textContent = "Students who participated: " + participatedCount;
+
+  // Chart.js
+  const ctx = document.getElementById('reportChart').getContext('2d');
+
+  if (window.myChart) window.myChart.destroy(); // avoid duplicate charts
+
+  window.myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Total', 'Present', 'Participated'],
+      datasets: [{
+        label: 'Attendance Report',
+        data: [total, presentCount, participatedCount],
+        backgroundColor: ['#7699ff','#6cd66c','#ffb366']
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+});
+
+
+
+// -------------EXERCICE 5 : JQUERY-------------
 
 $(document).ready(function() {
 
@@ -230,4 +300,92 @@ $(document).ready(function() {
 
 });
 
+
+// ============== EXO : Exo6=================
+
+
+// Excellent student = (absences < 3) AND (participations >= 4)
+document.getElementById("highlightExcellentBtn").addEventListener("click", () => {
+  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+
+  rows.forEach(row => {
+    const abs = parseInt(row.querySelector(".absence-count").textContent);
+    const prt = parseInt(row.querySelector(".participation-count").textContent);
+
+    if (abs < 3 && prt >= 4) {
+      row.classList.add("highlight-excellent");
+    }
+  });
+});
+
+
+
+// --------------- Reset Colors-----------------
+document.getElementById("resetColorsBtn").addEventListener("click", () => {
+  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+
+  rows.forEach(row => {
+    row.classList.remove("highlight-excellent");
+  });
+});
+//  Exo 7 ========Exo 7====================
+
+$(document).ready(function() {
+
+    
+    // 1) SEARCH BY NAME
+    
+    $("#searchInput").on("keyup", function () {
+        const value = $(this).val().toLowerCase();
+
+        $("#attendanceTable tbody tr").filter(function () {
+            const lastName = $(this).find("td:first").text().toLowerCase();
+            const firstName = $(this).find("td:nth-child(2)").text().toLowerCase();
+
+            $(this).toggle(
+                lastName.includes(value) || firstName.includes(value)
+            );
+        });
+    });
+
+    
+    // 2) SORT BY ABSENCES ASCENDING
+    
+    $("#sortAbsAscBtn").on("click", function () {
+        const rows = $("#attendanceTable tbody tr").get();
+
+        rows.sort(function (a, b) {
+            const absA = parseInt($(a).find(".absence-count").text());
+            const absB = parseInt($(b).find(".absence-count").text());
+            return absA - absB; // Ascending
+        });
+
+        $.each(rows, function (index, row) {
+            $("#attendanceTable tbody").append(row);
+        });
+
+        $("#sortMessage").text("Currently sorted by absences (ascending).");
+    });
+
+    
+    // 3) SORT BY PARTICIPATION DESCENDING
+   
+    $("#sortPrtDescBtn").on("click", function () {
+        const rows = $("#attendanceTable tbody tr").get();
+
+        rows.sort(function (a, b) {
+            const prtA = parseInt($(a).find(".participation-count").text());
+            const prtB = parseInt($(b).find(".participation-count").text());
+            return prtB - prtA; // Descending
+        });
+
+        $.each(rows, function (index, row) {
+            $("#attendanceTable tbody").append(row);
+        });
+
+        $("#sortMessage").text("Currently sorted by participation (descending).");
+    });
+
+});
+ 
 

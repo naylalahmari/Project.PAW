@@ -5,135 +5,237 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TP2</title>
 
-  <!-- jQuery ajouté -->
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    nav {
+      background: #333;
+      padding: 15px;
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    section {
+      display: none; /* caché par défaut */
+      padding: 20px;
+    }
+
+    #home { display: block; } /* section visible par défaut */
+
+    #attendanceTable button {
+      width: 35px;
+      height: 30px;
+      font-size: 18px;
+    }
+    .highlight-excellent {
+  animation: highlightGlow 2s ease-in-out infinite alternate;
+}
+
+/* glowing effect */
+@keyframes highlightGlow {
+  from {
+    background-color: #4de03a;
+    box-shadow: 0 0 5px 2px #47eb47;
+  }
+  to {
+    background-color: #7af819;
+    box-shadow: 0 0 15px 5px #68fe31;
+  }
+}
+  </style>
 </head>
+
 <body>
-  <h1>Liste de Présence</h1>
 
-  <table id="attendanceTable" border="1">
-    <thead>
-      <tr>
-        <th rowspan="2">Last Name</th>
-        <th rowspan="2">First Name</th>
-        <th colspan="2">S1</th>
-        <th colspan="2">S2</th>
-        <th colspan="2">S3</th>
-        <th colspan="2">S4</th>
-        <th colspan="2">S5</th>
-        <th colspan="2">S6</th>
-        <th rowspan="2">Absences</th>
-        <th rowspan="2">Participation</th>
-        <th rowspan="2">Message</th>
-      </tr>
-      <tr>
-        <th>P</th><th>Pa</th>
-        <th>P</th><th>Pa</th>
-        <th>P</th><th>Pa</th>
-        <th>P</th><th>Pa</th>
-        <th>P</th><th>Pa</th>
-        <th>P</th><th>Pa</th>
-      </tr>
-    </thead>
+  <!-- NAVIGATION -->
+  <nav>
+    <a onclick="showSection('home')">Home</a>
+    <a onclick="showSection('attendance')">Attendance List</a>
+    <a onclick="showSection('addStudent')">Add Student</a>
+    <a onclick="showSection('reports')">Reports</a>
+    <a onclick="alert('Logged out!')">Log out</a>
+  </nav>
 
-    <tbody>
-      <!-- Étudiant 1 -->
-      <tr>
-        <td>Ahmed</td>
-        <td>Sara</td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td class="absence-count">0 Abs</td>
-        <td class="participation-count">0 prt</td>
-        <td class="message"></td>
-      </tr>
+  <!-- SECTION HOME -->
+  <section id="home">
+    <h1>Welcome!</h1>
+    <p>This is your attendance system.</p>
+          </section>
 
-      <!-- Étudiant 2 -->
-      <tr>
-        <td>Yacine</td>
-        <td>Ali</td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td class="absence-count">0 Abs</td>
-        <td class="participation-count">0 prt</td>
-        <td class="message"></td>
-      </tr>
+          <!-- SECTION ATTENDANCE LIST -->
+          <section id="attendance">
+            <h1>Liste de Présence</h1>
+            <div style="margin-bottom: 20px;">
+            <label><b>Search by Name:</b></label>
+            <input type="text" id="searchInput" placeholder="Type a name..." style="padding:5px; width:200px;">
+        </div>
 
-      <!-- Étudiant 3 -->
-      <tr>
-        <td>Houcine</td>
-        <td>Rania</td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td><button class="attendance" onclick="toggleX(this)"></button></td>
-        <td><button class="participation" onclick="toggleX(this)"></button></td>
-        <td class="absence-count">0 Abs</td>
-        <td class="participation-count">0 prt</td>
-        <td class="message"></td>
-      </tr>
-    </tbody>
-  </table>
+        <button id="sortAbsAscBtn" class="btn">Sort by Absences (Ascending)</button>
+        <button id="sortPrtDescBtn" class="btn">Sort by Participation (Descending)</button>
 
-  <h2>Add Student</h2>
+        <p id="sortMessage" style="font-style: italic; margin-top: 10px;"></p>
 
-<form id="addStudentForm" novalidate>
-  <div>
-    <label for="studentId">Student ID:</label><br>
-    <input type="text" id="studentId" name="studentId">
-    <div class="error" id="studentIdError" style="color:red;"></div>
-  </div>
-  <br>
-  <div>
-    <label for="lastName">Last Name:</label><br>
-    <input type="text" id="lastName" name="lastName">
-    <div class="error" id="lastNameError" style="color:red;"></div>
-  </div>
-  <br>
-  <div>
-    <label for="firstName">First Name:</label><br>
-    <input type="text" id="firstName" name="firstName">
-    <div class="error" id="firstNameError" style="color:red;"></div>
-  </div>
-  <br>
-  <div>
-    <label for="email">Email:</label><br>
-    <input type="text" id="email" name="email">
-    <div class="error" id="emailError" style="color:red;"></div>
-  </div>
-  <br>
-  <button type="submit">Add Student</button>
-</form>
 
-<div id="formSuccess" style="color:green;font-weight:bold;margin-top:10px;"></div>
+    <table id="attendanceTable" border="1">
+      <thead>
+        <tr>
+          <th rowspan="2">Last Name</th>
+          <th rowspan="2">First Name</th>
+          <th colspan="2">S1</th>
+          <th colspan="2">S2</th>
+          <th colspan="2">S3</th>
+          <th colspan="2">S4</th>
+          <th colspan="2">S5</th>
+          <th colspan="2">S6</th>
+          <th rowspan="2">Absences</th>
+          <th rowspan="2">Participation</th>
+          <th rowspan="2">Message</th>
+        </tr>
+        <tr>
+          <th>P</th><th>Pa</th>
+          <th>P</th><th>Pa</th>
+          <th>P</th><th>Pa</th>
+          <th>P</th><th>Pa</th>
+          <th>P</th><th>Pa</th>
+          <th>P</th><th>Pa</th>
+        </tr>
+      </thead>
 
-<script src="script.js"></script>
+      <tbody>
+        <tr>
+          <td>Ahmed</td>
+          <td>Sara</td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td class="absence-count">0 Abs</td>
+          <td class="participation-count">0 prt</td>
+          <td class="message"></td>
+        </tr>
+
+        <tr>
+          <td>Yacine</td>
+          <td>Ali</td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td class="absence-count">0 Abs</td>
+          <td class="participation-count">0 prt</td>
+          <td class="message"></td>
+        </tr>
+
+        <tr>
+          <td>Houcine</td>
+          <td>Rania</td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="participation" onclick="toggleX(this)"></button></td>
+          <td class="absence-count">0 Abs</td>
+          <td class="participation-count">0 prt</td>
+          <td class="message"></td>
+        </tr>
+
+      </tbody>
+    </table>
+      <button id="highlightExcellentBtn" class="btn">Highlight Excellent Students</button>
+      <button id="resetColorsBtn" class="btn">Reset Colors</button>
+
+
+  </section>
+
+  <!-- SECTION ADD STUDENT -->
+  <section id="addStudent">
+    <h2>Add Student</h2>
+
+    <form id="addStudentForm" novalidate>
+      <div>
+        <label for="studentId">Student ID:</label><br>
+        <input type="text" id="studentId" name="studentId">
+        <div class="error" id="studentIdError" style="color:red;"></div>
+      </div><br>
+
+      <div>
+        <label for="lastName">Last Name:</label><br>
+        <input type="text" id="lastName" name="lastName">
+        <div class="error" id="lastNameError" style="color:red;"></div>
+      </div><br>
+
+      <div>
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName">
+        <div class="error" id="firstNameError" style="color:red;"></div>
+      </div><br>
+
+      <div>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email">
+        <div class="error" id="emailError" style="color:red;"></div>
+      </div><br>
+
+      <button type="submit">Add Student</button>
+    </form>
+
+    <div id="formSuccess" style="color:green;font-weight:bold;margin-top:10px;"></div>
+  </section>
+
+  <!-- SECTION REPORTS -->
+  <section id="reports">
+    <h2>Attendance Report</h2>
+
+    <button id="showReportBtn">Generate Report</button>
+
+    <div id="reportSection" style="margin-top:20px; display:none;">
+      <p id="totalStudents"></p>
+      <p id="studentsPresent"></p>
+      <p id="studentsParticipated"></p>
+
+      <canvas id="reportChart" width="200" height="120"></canvas>
+
+      <style>
+        #reportChart {
+          max-width: 280px;
+          max-height: 160px;
+        }
+      </style>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>
