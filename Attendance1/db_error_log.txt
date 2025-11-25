@@ -1,0 +1,1 @@
+2025-11-25 20:20:11 - SQLSTATE[HY000] [1049] Base 'attendance_db' inconnue
