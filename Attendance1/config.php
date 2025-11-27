@@ -1,5 +1,8 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'project');
+// Configuration Base de données
+return [
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '', 
+    'database' => 'project'
+];
