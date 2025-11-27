@@ -1,16 +1,10 @@
-// ------------------------------------
-// 🔵 NAVIGATION ENTRE SECTIONS
-// ------------------------------------
+// NAVIGATION ENTRE SECTIONS
 function showSection(sectionId) {
   document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
   document.getElementById(sectionId).style.display = "block";
 }
 
 
-
-// ------------------------------------
-// TON CODE EXACT
-// ------------------------------------
 
 // --- Toggle présence / participation ---
 function toggleX(button) {
@@ -301,7 +295,7 @@ $(document).ready(function() {
 });
 
 
-// ============== EXO : Exo6=================
+// ============== Exo6=================
 
 
 // Excellent student = (absences < 3) AND (participations >= 4)
@@ -328,7 +322,7 @@ document.getElementById("resetColorsBtn").addEventListener("click", () => {
     row.classList.remove("highlight-excellent");
   });
 });
-//  Exo 7 ========Exo 7====================
+// ========Exo 7====================
 
 $(document).ready(function() {
 
