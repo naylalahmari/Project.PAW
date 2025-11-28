@@ -8,37 +8,42 @@
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <style>
+    <!--Style du menu-->
+  <style> 
     nav {
       background: #333;
       padding: 15px;
       display: flex;
       gap: 20px;
     }
-    nav a {
+     
+    nav a { /*Style du menu*/
       color: white;
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
     }
-
+      /*Toutes les sections sont cachées par défaut*/
     section {
       display: none; /* caché par défaut */
       padding: 20px;
     }
-
+     /* Sauf la section "home" qui est visible au début*/
     #home { display: block; } /* section visible par défaut */
 
+    /*Taille des petits boutons P / Pa*/
     #attendanceTable button {
       width: 35px;
       height: 30px;
       font-size: 18px;
     }
+
+    /*Quand on ajoute cette classe, l’animation Glow s’applique*/
     .highlight-excellent {
   animation: highlightGlow 2s ease-in-out infinite alternate;
 }
 
-/* glowing effect */
+/* Animation qui fait briller les cellules */
 @keyframes highlightGlow {
   from {
     background-color: #4de03a;
@@ -56,31 +61,31 @@
 
   <!-- NAVIGATION -->
   <nav>
-    <a onclick="showSection('home')">Home</a>
-    <a onclick="showSection('attendance')">Attendance List</a>
-    <a onclick="showSection('addStudent')">Add Student</a>
-    <a onclick="showSection('reports')">Reports</a>
-    <a onclick="alert('Logged out!')">Log out</a>
+    <a onclick="showSection('home')">Home</a> <!--Lien qui affiche la section "home"-->
+    <a onclick="showSection('attendance')">Attendance List</a> <!--Affiche la section “attendance”-->
+    <a onclick="showSection('addStudent')">Add Student</a> <!--Affiche la section “addStudent”-->
+    <a onclick="showSection('reports')">Reports</a> <!--Affiche la section “reports”-->
+    <a onclick="alert('Logged out!')">Log out</a> <!--Affiche une alerte quand on clique-->
   </nav>
 
-  <!-- SECTION HOME -->
-  <section id="home">
-    <h1>Welcome!</h1>
-    <p>This is your attendance system.</p>
-          </section>
+        <!-- SECTION HOME -->
+   <section id="home">
+        <h1>Welcome!</h1>
+        <p>This is your attendance system.</p>
+    </section>
 
           <!-- SECTION ATTENDANCE LIST -->
           <section id="attendance">
             <h1>Liste de Présence</h1>
             <div style="margin-bottom: 20px;">
-            <label><b>Search by Name:</b></label>
-            <input type="text" id="searchInput" placeholder="Type a name..." style="padding:5px; width:200px;">
-        </div>
+              <label><b>Search by Name:</b></label> 
+              <input type="text" id="searchInput" placeholder="Type a name..." style="padding:5px; width:200px;"><!--Input pour filtrer les noms-->
+            </div>
 
-        <button id="sortAbsAscBtn" class="btn">Sort by Absences (Ascending)</button>
-        <button id="sortPrtDescBtn" class="btn">Sort by Participation (Descending)</button>
+        <button id="sortAbsAscBtn" class="btn">Sort by Absences (Ascending)</button> <!--Tri des absences (ordre croissant)-->
+        <button id="sortPrtDescBtn" class="btn">Sort by Participation (Descending)</button><!--Tri par participation (ordre décroissant)-->
 
-        <p id="sortMessage" style="font-style: italic; margin-top: 10px;"></p>
+        <p id="sortMessage" style="font-style: italic; margin-top: 10px;"></p><!--Message de confirmation de tri-->
 
 
     <table id="attendanceTable" border="1">
@@ -112,7 +117,7 @@
         <tr>
           <td>Ahmed</td>
           <td>Sara</td>
-          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td><!--Bouton vide qui devient X quand on clique (fonction JS)-->
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
@@ -124,15 +129,15 @@
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
-          <td class="absence-count">0 Abs</td>
-          <td class="participation-count">0 prt</td>
-          <td class="message"></td>
+          <td class="absence-count">0 Abs</td><!--Compteur d'absences-->
+          <td class="participation-count">0 prt</td><!--Compteur de participation-->
+          <td class="message"></td><!--Message personnalisé (excellent, mauvais…)-->
         </tr>
 
         <tr>
           <td>Yacine</td>
           <td>Ali</td>
-          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td><!--Bouton vide qui devient X quand on clique (fonction JS)-->
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
@@ -144,15 +149,15 @@
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
-          <td class="absence-count">0 Abs</td>
-          <td class="participation-count">0 prt</td>
-          <td class="message"></td>
+          <td class="absence-count">0 Abs</td><!--Compteur d'absences-->
+          <td class="participation-count">0 prt</td><!--Compteur de participation-->
+          <td class="message"></td><!--Message personnalisé (excellent, mauvais…)-->
         </tr>
 
         <tr>
           <td>Houcine</td>
           <td>Rania</td>
-          <td><button class="attendance" onclick="toggleX(this)"></button></td>
+          <td><button class="attendance" onclick="toggleX(this)"></button></td><!--Bouton vide qui devient X quand on clique (fonction JS)-->
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
@@ -164,15 +169,15 @@
           <td><button class="participation" onclick="toggleX(this)"></button></td>
           <td><button class="attendance" onclick="toggleX(this)"></button></td>
           <td><button class="participation" onclick="toggleX(this)"></button></td>
-          <td class="absence-count">0 Abs</td>
-          <td class="participation-count">0 prt</td>
-          <td class="message"></td>
+          <td class="absence-count">0 Abs</td><!--Compteur d'absences-->
+          <td class="participation-count">0 prt</td><!--Compteur de participation-->
+          <td class="message"></td><!--Message personnalisé (excellent, mauvais…)-->
         </tr>
 
       </tbody>
     </table>
-      <button id="highlightExcellentBtn" class="btn">Highlight Excellent Students</button>
-      <button id="resetColorsBtn" class="btn">Reset Colors</button>
+      <button id="highlightExcellentBtn" class="btn">Highlight Excellent Students</button><!--Colore les bons élèves-->
+      <button id="resetColorsBtn" class="btn">Reset Colors</button><!--Supprime la couleur-->
 
 
   </section>
@@ -185,44 +190,45 @@
       <div>
         <label for="studentId">Student ID:</label><br>
         <input type="text" id="studentId" name="studentId">
-        <div class="error" id="studentIdError" style="color:red;"></div>
+        <div class="error" id="studentIdError" style="color:red;"></div><!--pour afficher les erreurs-->
       </div><br>
 
       <div>
         <label for="lastName">Last Name:</label><br>
         <input type="text" id="lastName" name="lastName">
-        <div class="error" id="lastNameError" style="color:red;"></div>
+        <div class="error" id="lastNameError" style="color:red;"></div><!--pour afficher les erreurs-->
       </div><br>
 
       <div>
         <label for="firstName">First Name:</label><br>
         <input type="text" id="firstName" name="firstName">
-        <div class="error" id="firstNameError" style="color:red;"></div>
+        <div class="error" id="firstNameError" style="color:red;"></div><!--pour afficher les erreurs-->
       </div><br>
 
       <div>
         <label for="email">Email:</label><br>
         <input type="text" id="email" name="email">
-        <div class="error" id="emailError" style="color:red;"></div>
+        <div class="error" id="emailError" style="color:red;"></div><!--pour afficher les erreurs-->
       </div><br>
 
-      <button type="submit">Add Student</button>
+      <button type="submit">Add Student</button><!--Envoyer le formulaire-->
     </form>
 
-    <div id="formSuccess" style="color:green;font-weight:bold;margin-top:10px;"></div>
+    <div id="formSuccess" style="color:green;font-weight:bold;margin-top:10px;"></div><!--Zone pour afficher “Student added successfully”-->
   </section>
 
   <!-- SECTION REPORTS -->
   <section id="reports">
     <h2>Attendance Report</h2>
 
-    <button id="showReportBtn">Generate Report</button>
+    <button id="showReportBtn">Generate Report</button><!--Bouton pour générer les statistiques-->
 
-    <div id="reportSection" style="margin-top:20px; display:none;">
+    <div id="reportSection" style="margin-top:20px; display:none;"><!--Section cachée qui s’affiche après clic-->
+        <!--Phrases ou les nombres seront insérés via JS-->
       <p id="totalStudents"></p>
       <p id="studentsPresent"></p>
       <p id="studentsParticipated"></p>
-
+        <!--Zone où Chart.js dessine le graphique-->
       <canvas id="reportChart" width="200" height="120"></canvas>
 
       <style>
@@ -233,8 +239,10 @@
       </style>
     </div>
   </section>
-
+  
+    <!--Charge la bibliothèque Chart.js-->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--Charge ton fichier JS qui contient toute la logiqu-->
   <script src="script.js"></script>
 
 </body>

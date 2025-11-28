@@ -1,19 +1,19 @@
 // NAVIGATION ENTRE SECTIONS
-function showSection(sectionId) {
-  document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
-  document.getElementById(sectionId).style.display = "block";
+function showSection(sectionId) { /*fonction qui affiche une section et cache les autres */
+  document.querySelectorAll("section").forEach(sec => sec.style.display = "none"); /*sélectionne toutes les balises section et les cache toutes */
+  document.getElementById(sectionId).style.display = "block"; /*affiche seulement la section demandée */
 }
 
 
 
 // --- Toggle présence / participation ---
-function toggleX(button) {
-  if (button.textContent.trim() === "") {
+function toggleX(button) { /*quand on clique sur un bouton il met ✓ SINON il l’enlève */
+  if (button.textContent.trim() === "") { /*bouton vide = mettre “✓”Sinon → effacer */
     button.textContent = "✅";
   } else {
     button.textContent = "";
   }
-
+  /*il met à jour */
   updateAbsences();
   updateParticipations();
   updateRowStylesAndMessages();
@@ -30,7 +30,7 @@ function updateAbsences() {
 
     let absences = 0;
     buttons.forEach((btn) => {
-      if (btn.textContent.trim() === "") absences++;
+      if (btn.textContent.trim() === "") absences++;/*compte les boutons vides =absences*/
     });
     absenceCell.textContent = absences + " Abs";
   });
@@ -38,28 +38,28 @@ function updateAbsences() {
 
 // --- Compte les participations ---
 function updateParticipations() {
-  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+  const rows = document.querySelectorAll("#attendanceTable tbody tr");/*selectionne tout les lignes du tableau*/
 
   rows.forEach((row) => {
-    const partBtns = row.querySelectorAll(".participation");
-    const partCell = row.querySelector(".participation-count");
+    const partBtns = row.querySelectorAll(".participation");/*selectionne tout les boutons de participation*/
+    const partCell = row.querySelector(".participation-count");/*selectionne la cellule de particpationµ*/
 
     let participations = 0;
-    partBtns.forEach((btn) => {
-      if (btn.textContent.trim() === "✅") participations++;
+    partBtns.forEach((btn) => { /* conntrole chaque bouton de participation*/
+      if (btn.textContent.trim() === "✅") participations++;/*compte les ✓ */
     });
-    partCell.textContent = participations + " prt";
+    partCell.textContent = participations + " prt"; /*mettre a jour le texte de la cellule*/
   });
 }
 
 // --- Couleur + message ---
-function updateRowStylesAndMessages() {
-  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+function updateRowStylesAndMessages() { /*met a jour la couleur et le message de chaque ligne*/
+  const rows = document.querySelectorAll("#attendanceTable tbody tr");/*selectionne toutes les lignes du tableau*/
 
-  rows.forEach((row) => {
-    const abs = parseInt(row.querySelector(".absence-count").textContent);
-    const prt = parseInt(row.querySelector(".participation-count").textContent);
-    const msg = row.querySelector(".message");
+  rows.forEach((row) => { 
+    const abs = parseInt(row.querySelector(".absence-count").textContent);/*recupere le nombre d'absences*/
+    const prt = parseInt(row.querySelector(".participation-count").textContent);/*recupere le nombre de particpation*/
+    const msg = row.querySelector(".message"); /*recupere la cellule de message*/
 
     if (abs < 3) row.style.backgroundColor = "#b8f5b8";
     else if (abs >= 3 && abs <= 4) row.style.backgroundColor = "#fff3b0";
@@ -88,14 +88,14 @@ function saveData() {
 }
 
 // --- Chargement ---
-function loadData() {
-  const data = JSON.parse(localStorage.getItem("attendanceData"));
-  if (!data) return;
+function loadData() { /*Charge les données*/
+  const data = JSON.parse(localStorage.getItem("attendanceData"));/*Remet les ✓*/
+  if (!data) return; /*Met à jour absences/participations/couleurs*/
 
-  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+  const rows = document.querySelectorAll("#attendanceTable tbody tr"); 
 
-  rows.forEach((row, rowIndex) => {
-    const buttons = row.querySelectorAll("button");
+  rows.forEach((row, rowIndex) => { 
+    const buttons = row.querySelectorAll("button"); 
     data[rowIndex]?.forEach((value, btnIndex) => {
       buttons[btnIndex].textContent = value;
     });
@@ -107,11 +107,11 @@ function loadData() {
 }
 
 // --- Ajout étudiant ---
-document.getElementById("addStudentForm")?.addEventListener("submit", function(e) {
-  e.preventDefault();
-  let hasError = false;
+document.getElementById("addStudentForm")?.addEventListener("submit", function(e) {/*quand on envoie le formulaire*/
+  e.preventDefault();/*empeche le chargement de la page*/
+  let hasError = false;/*variable pour suivre les erreurs de validation*/
 
-  const studentId = document.getElementById("studentId").value.trim();
+  const studentId = document.getElementById("studentId").value.trim();/*recupere les valeurs des champs*/
   const lastName = document.getElementById("lastName").value.trim();
   const firstName = document.getElementById("firstName").value.trim();
   const email = document.getElementById("email").value.trim();
@@ -132,12 +132,12 @@ document.getElementById("addStudentForm")?.addEventListener("submit", function(e
   else if(!/^\S+@\S+\.\S+$/.test(email)) { document.getElementById("emailError").textContent="Invalid email format."; hasError=true; }
 
   if(!hasError){
-    const tbody = document.querySelector("#attendanceTable tbody");
-    const newRow = document.createElement("tr");
+    const tbody = document.querySelector("#attendanceTable tbody");/*selectionne le corps du tableu*/
+    const newRow = document.createElement("tr");/*creer une nouvelle ligne*/
 
     let buttonsHTML = "";
     for (let i = 0; i < 6; i++) {
-      buttonsHTML += `<td><button class="attendance" onclick="toggleX(this)"></button></td>`;
+      buttonsHTML += `<td><button class="attendance" onclick="toggleX(this)"></button></td>`;/*ajpute 6 boutons de presence*/
       buttonsHTML += `<td><button class="participation" onclick="toggleX(this)"></button></td>`;
     }
 
@@ -163,12 +163,12 @@ document.getElementById("addStudentForm")?.addEventListener("submit", function(e
 });
 
 // --- Validation dynamique ---
-document.addEventListener("DOMContentLoaded", () => {
-  loadData(); 
+document.addEventListener("DOMContentLoaded", () => { /*quand le contenu de la page est chargé*/
+  loadData(); /*charge les données sauvegardées*/
 
-  const lastNameField = document.getElementById("lastName");
-  const firstNameField = document.getElementById("firstName");
-  const studentIdField = document.getElementById("studentId");
+  const lastNameField = document.getElementById("lastName");/*selectionne le champ nom*/
+  const firstNameField = document.getElementById("firstName");/*selectionne le champ prenom*/
+  const studentIdField = document.getElementById("studentId");/*selectionne le champ id etudiant*/
 
   const lastNameMsg = document.createElement("div");
   lastNameMsg.style.color = "red";
@@ -212,11 +212,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --------EXERCICE 4 : SHOW REPORT + CHART------
 
-document.getElementById("showReportBtn").addEventListener("click", function() {
+document.getElementById("showReportBtn").addEventListener("click", function() { 
 
   const rows = document.querySelectorAll("#attendanceTable tbody tr");
 
-  let total = rows.length;
+  let total = rows.length;/*nombre total d'etudiants*/
   let presentCount = 0;
   let participatedCount = 0;
 
@@ -236,8 +236,8 @@ document.getElementById("showReportBtn").addEventListener("click", function() {
   });
 
   // Display report
-  document.getElementById("reportSection").style.display = "block";
-  document.getElementById("totalStudents").textContent = "Total number of students: " + total;
+  document.getElementById("reportSection").style.display = "block"; /*affiche la section rapport*/
+  document.getElementById("totalStudents").textContent = "Total number of students: " + total;/*met a jour le texte*/
   document.getElementById("studentsPresent").textContent = "Students marked present: " + presentCount;
   document.getElementById("studentsParticipated").textContent = "Students who participated: " + participatedCount;
 
@@ -270,26 +270,26 @@ document.getElementById("showReportBtn").addEventListener("click", function() {
 
 // -------------EXERCICE 5 : JQUERY-------------
 
-$(document).ready(function() {
+$(document).ready(function() { 
 
   // survol : highlight
-  $("#attendanceTable tbody").on("mouseenter", "tr", function() {
-    $(this).css("background-color", "#d0e8ff");
+  $("#attendanceTable tbody").on("mouseenter", "tr", function() { /*quand la souris entre dans une ligne*/
+    $(this).css("background-color", "#d0e8ff"); /*change la couleur de fond*/
   });
 
   // quitter : enlever highlight
-  $("#attendanceTable tbody").on("mouseleave", "tr", function() {
-    $(this).css("background-color", "");
-    updateRowStylesAndMessages();
+  $("#attendanceTable tbody").on("mouseleave", "tr", function() {/*quand la souris quitte une ligne*/
+    $(this).css("background-color", "");/*remet la couleur d'origine*/
+    updateRowStylesAndMessages();/*met a jour les couleurs selon les regles*/
   });
 
   // clic : afficher nom + absences
-  $("#attendanceTable tbody").on("click", "tr", function() {
-    const lastName = $(this).find("td").eq(0).text();
-    const firstName = $(this).find("td").eq(1).text();
-    const absences = $(this).find(".absence-count").text();
+  $("#attendanceTable tbody").on("click", "tr", function() {/*quand on clique sur une ligne*/
+    const lastName = $(this).find("td").eq(0).text();/*recupere le nom*/
+    const firstName = $(this).find("td").eq(1).text();/*recupere le nom et le prenom*/
+    const absences = $(this).find(".absence-count").text();/*recupere le nombre d'absences*/
 
-    alert("Student: " + firstName + " " + lastName + "\n" + "Absences: " + absences);
+    alert("Student: " + firstName + " " + lastName + "\n" + "Absences: " + absences);/*affiche une alerte avec les infos*/
   });
 
 });
@@ -302,12 +302,12 @@ $(document).ready(function() {
 document.getElementById("highlightExcellentBtn").addEventListener("click", () => {
   const rows = document.querySelectorAll("#attendanceTable tbody tr");
 
-  rows.forEach(row => {
-    const abs = parseInt(row.querySelector(".absence-count").textContent);
-    const prt = parseInt(row.querySelector(".participation-count").textContent);
+  rows.forEach(row => {/*parcourt chaque ligne*/
+    const abs = parseInt(row.querySelector(".absence-count").textContent);/*recupere le nombre d'absences*/
+    const prt = parseInt(row.querySelector(".participation-count").textContent);/*recupere le nombre de partcipations*/
 
-    if (abs < 3 && prt >= 4) {
-      row.classList.add("highlight-excellent");
+    if (abs < 3 && prt >= 4) {/*conditions pour etre un etu excellent*/
+      row.classList.add("highlight-excellent");/*ajoute la classe pour changer la couleurs*/
     }
   });
 });
@@ -316,10 +316,10 @@ document.getElementById("highlightExcellentBtn").addEventListener("click", () =>
 
 // --------------- Reset Colors-----------------
 document.getElementById("resetColorsBtn").addEventListener("click", () => {
-  const rows = document.querySelectorAll("#attendanceTable tbody tr");
+  const rows = document.querySelectorAll("#attendanceTable tbody tr")
 
   rows.forEach(row => {
-    row.classList.remove("highlight-excellent");
+    row.classList.remove("highlight-excellent");/*enleve la classe de couleur*/
   });
 });
 // ========Exo 7====================
@@ -329,15 +329,15 @@ $(document).ready(function() {
     
     // 1) SEARCH BY NAME
     
-    $("#searchInput").on("keyup", function () {
-        const value = $(this).val().toLowerCase();
+    $("#searchInput").on("keyup", function () {/*quand on tape dans le champ de recherche*/
+        const value = $(this).val().toLowerCase();/*recupere la valeur en miniscule*/
 
-        $("#attendanceTable tbody tr").filter(function () {
-            const lastName = $(this).find("td:first").text().toLowerCase();
-            const firstName = $(this).find("td:nth-child(2)").text().toLowerCase();
+        $("#attendanceTable tbody tr").filter(function () {/*parcourt chaque ligne du tab*/
+            const lastName = $(this).find("td:first").text().toLowerCase();/*recupere le nom en miniscule*/
+            const firstName = $(this).find("td:nth-child(2)").text().toLowerCase();/*recupere le prenom en miniscule*/
 
-            $(this).toggle(
-                lastName.includes(value) || firstName.includes(value)
+            $(this).toggle(/*affiche ou cache la ligne selon la condition*/
+                lastName.includes(value) || firstName.includes(value)/*condition de recherche*/
             );
         });
     });
@@ -345,39 +345,39 @@ $(document).ready(function() {
     
     // 2) SORT BY ABSENCES ASCENDING
     
-    $("#sortAbsAscBtn").on("click", function () {
-        const rows = $("#attendanceTable tbody tr").get();
+    $("#sortAbsAscBtn").on("click", function () { /*quand on clique sur le bouttons de tri*/
+        const rows = $("#attendanceTable tbody tr").get();/*recupere touts les lignes du tableau*/
 
-        rows.sort(function (a, b) {
-            const absA = parseInt($(a).find(".absence-count").text());
-            const absB = parseInt($(b).find(".absence-count").text());
+        rows.sort(function (a, b) {/*fonction du tri*/
+            const absA = parseInt($(a).find(".absence-count").text());/*recupere la ligne d'absence de la ligne a*/
+            const absB = parseInt($(b).find(".absence-count").text());/*recupere la ligne d'absence de la ligne b*/
             return absA - absB; // Ascending
         });
 
-        $.each(rows, function (index, row) {
-            $("#attendanceTable tbody").append(row);
+        $.each(rows, function (index, row) {/*parcourt chaque ligne triée*/
+            $("#attendanceTable tbody").append(row);/*remet les lignes dans le tab dans l'odre trié*/
         });
 
-        $("#sortMessage").text("Currently sorted by absences (ascending).");
+        $("#sortMessage").text("Currently sorted by absences (ascending).");/*met a jour le message de tri*/
     });
 
     
     // 3) SORT BY PARTICIPATION DESCENDING
    
-    $("#sortPrtDescBtn").on("click", function () {
-        const rows = $("#attendanceTable tbody tr").get();
+    $("#sortPrtDescBtn").on("click", function () {/*quand on clique sur le bouttons de tri*/
+        const rows = $("#attendanceTable tbody tr").get();/*recupere touts les lignes du tableau*/
 
-        rows.sort(function (a, b) {
-            const prtA = parseInt($(a).find(".participation-count").text());
-            const prtB = parseInt($(b).find(".participation-count").text());
+        rows.sort(function (a, b) {/*fonction du tri*/
+            const prtA = parseInt($(a).find(".participation-count").text());/*recupere la ligne d'absence de la ligne a*/
+            const prtB = parseInt($(b).find(".participation-count").text());/*recupere la ligne d'absence de la ligne b*/
             return prtB - prtA; // Descending
         });
 
-        $.each(rows, function (index, row) {
-            $("#attendanceTable tbody").append(row);
+        $.each(rows, function (index, row) {/*parcourt chaque ligne triée*/
+            $("#attendanceTable tbody").append(row);/*remet les lignes dans le tab dans l'odre trié*/
         });
 
-        $("#sortMessage").text("Currently sorted by participation (descending).");
+        $("#sortMessage").text("Currently sorted by participation (descending).");/*met a jour le message de tri*/
     });
 
 });

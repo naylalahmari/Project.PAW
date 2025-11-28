@@ -1,29 +1,29 @@
 <?php
-require 'db_connect.php';
+require 'db_connect.php';/*inclue le fichier de cnx a la bdd*/
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $fullname = $_POST['fullname'] ?? '';
-    $matricule = $_POST['matricule'] ?? '';
-    $group_id = $_POST['group_id'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {/*verifie si le formulaire est soumis*/
+    $fullname = $_POST['fullname'] ?? '';/*recupere le nom complet*/
+    $matricule = $_POST['matricule'] ?? '';/*recupere le matricule*/
+    $group_id = $_POST['group_id'] ?? '';/*recupere l'id du groupe*/
 
-    if ($fullname && $matricule && $group_id) {
-        $db = getConnection();
+    if ($fullname && $matricule && $group_id) {/*veridie que tout les champs sont remplis*/
+        $db = getConnection();/*recupere la cnx a la bdd*/
 
-        if ($db) {
-            $sql = "INSERT INTO students (fullname, matricule, group_id) VALUES (?, ?, ?)";
-            $stmt = $db->prepare($sql);
+        if ($db) {/*veridie si la cnx est reussie*/
+            $sql = "INSERT INTO students (fullname, matricule, group_id) VALUES (?, ?, ?)";/*requette sql d'insertion*/
+            $stmt = $db->prepare($sql);/*prepare la requette*/
 
-            try {
-                $stmt->execute([$fullname, $matricule, $group_id]);
-                echo "Student added successfully.";
-            } catch (PDOException $e) {
-                echo "Error adding student: " . $e->getMessage();
+            try { /*essaie d'excuter la requette*/
+                $stmt->execute([$fullname, $matricule, $group_id]);/*execute la requette avec les valeurs*/
+                echo "Student added successfully.";/*message de succes*/
+            } catch (PDOException $e) {/*attrape les erreurs d'execution*/
+                echo "Error adding student: " . $e->getMessage();/*affiche le message d'erreur*/
             }
         } else {
-            echo "Database connection failed!";
+            echo "Database connection failed!";/*message d'erreur de cnx*/
         }
     } else {
-        echo "Please fill all the fields.";
+        echo "Please fill all the fields.";/*message d'erreur de champs vides*/
     }
 }
 ?>

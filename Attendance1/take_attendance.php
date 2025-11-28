@@ -4,17 +4,17 @@ require_once 'db_connect.php'; // ton fichier de connexion à la BDD
 $pdo = getConnection(); // récupère la connexion
 
 // 1. Récupérer tous les étudiants depuis la table `students`
-$stmt = $pdo->query("SELECT * FROM students ORDER BY fullname ASC");
-$students = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->query("SELECT * FROM students ORDER BY fullname ASC");/*requette sql de selection des etudiants*/
+$students = $stmt->fetchAll(PDO::FETCH_ASSOC);/*recupere tous les etudiants sous forme de tableau associatif*/
 
-$today = date("Y-m-d");
-$attendanceFile = "attendance_" . $today . ".json";
+$today = date("Y-m-d");/*date du jour*/
+$attendanceFile = "attendance_" . $today . ".json";/*fichier de presence du jour*/
 
 // 2. Formulaire soumis
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {/*verifie si le formulaire est soumis*/
     
-    if (file_exists($attendanceFile)) {
-        die("⚠️ Attendance for today has already been taken.");
+    if (file_exists($attendanceFile)) {/*verifie si le fichier de presence existe deja*/
+        die("⚠️ Attendance for today has already been taken.");/*message d'erreur si la presence a deja ete prise*/
     }
 
     $attendance = [];
